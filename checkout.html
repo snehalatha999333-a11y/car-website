@@ -9,60 +9,57 @@
 
 <div class="navbar">
   <h1>💳 Checkout</h1>
+
   <div>
     <a href="index.html">Home</a>
     <a href="cart.html">Cart</a>
   </div>
 </div>
 
-<h2>Your Order</h2>
+<div style="padding:20px; max-width:500px; margin:auto;">
 
-<div id="orderBox" style="padding:20px;"></div>
+  <h2>Enter Your Details</h2>
 
-<h3 id="totalPrice" style="padding:20px;"></h3>
+  <input id="name" placeholder="Your Name" style="width:100%; padding:10px; margin:10px 0;">
+  
+  <input id="address" placeholder="Your Address" style="width:100%; padding:10px; margin:10px 0;">
 
-<button onclick="payNow()" style="margin:20px; padding:10px;">
-  Pay Now
-</button>
+  <button onclick="placeOrder()" style="width:100%; padding:10px;">
+    Confirm Order
+  </button>
+
+  <h3 id="message" style="text-align:center; margin-top:20px;"></h3>
+
+</div>
 
 <script>
+
+function placeOrder() {
+
+  let name = document.getElementById("name").value;
+  let address = document.getElementById("address").value;
+
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  let prices = {
-    "BMW M4": 75000,
-    "Audi R8": 120000,
-    "Mercedes AMG GT": 95000
-  };
-
-  let total = 0;
-  let box = document.getElementById("orderBox");
-
   if (cart.length === 0) {
-    box.innerHTML = "<p>No items in cart</p>";
-  } else {
-    cart.forEach(car => {
-      let price = prices[car] || 0;
-      total += price;
-
-      let div = document.createElement("div");
-      div.innerHTML = "🚗 " + car + " - £" + price;
-      div.style.padding = "10px";
-      div.style.background = "#222";
-      div.style.margin = "10px";
-      div.style.borderRadius = "8px";
-
-      box.appendChild(div);
-    });
+    document.getElementById("message").innerText = "Cart is empty 🚗";
+    return;
   }
 
-  document.getElementById("totalPrice").innerText =
-    "Total: £" + total;
-
-  function payNow() {
-    alert("Payment successful (demo) 🎉");
-    localStorage.removeItem("cart");
-    window.location.href = "index.html";
+  if (name === "" || address === "") {
+    document.getElementById("message").innerText = "Please fill all fields!";
+    return;
   }
+
+  // Fake order success
+  document.getElementById("message").innerText =
+    "Order placed successfully 🎉";
+
+  // Clear cart after order
+  localStorage.removeItem("cart");
+
+}
+
 </script>
 
 </body>
