@@ -1,76 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Admin Login</title>
 </head>
 
-<body>
+<body style="text-align:center; padding:50px;">
 
-<div class="navbar">
-  <h1>🔐 Admin Panel</h1>
+<h2>🔐 Admin Login</h2>
 
-  <div>
-    <a href="index.html">Home</a>
-    <a href="cart.html">Cart</a>
-  </div>
-</div>
+<input id="user" placeholder="Username" style="padding:10px;"><br><br>
+<input id="pass" type="password" placeholder="Password" style="padding:10px;"><br><br>
 
-<h2 style="text-align:center;">Add New Car</h2>
+<button onclick="login()">Login</button>
 
-<div style="max-width:400px; margin:auto; padding:20px;">
-
-  <input id="name" placeholder="Car Name" style="width:100%; padding:10px; margin:10px 0;">
-  
-  <input id="price" placeholder="Price" type="number" style="width:100%; padding:10px; margin:10px 0;">
-
-  <input id="image" placeholder="Image URL" style="width:100%; padding:10px; margin:10px 0;">
-
-  <button onclick="addCar()" style="width:100%; padding:10px;">
-    Add Car
-  </button>
-
-  <h3 id="msg"></h3>
-
-</div>
+<h3 id="msg"></h3>
 
 <script>
 
-function addCar() {
+function login() {
+  let user = document.getElementById("user").value;
+  let pass = document.getElementById("pass").value;
 
-  let name = document.getElementById("name").value;
-  let price = document.getElementById("price").value;
-  let image = document.getElementById("image").value;
-
-  if (!name || !price || !image) {
-    document.getElementById("msg").innerText = "Please fill all fields!";
-    return;
+  if (user === "admin" && pass === "1234") {
+    localStorage.setItem("admin", "true");
+    window.location.href = "dashboard.html";
+  } else {
+    document.getElementById("msg").innerText = "Wrong credentials";
   }
-
-  fetch("https://car-website-dhn5.onrender.com/cars", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      name: name,
-      price: price,
-      image: image
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("msg").innerText = "Car added successfully 🚗";
-
-    // clear fields
-    document.getElementById("name").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("image").value = "";
-  })
-  .catch(err => {
-    document.getElementById("msg").innerText = "Error adding car";
-  });
-
 }
 
 </script>

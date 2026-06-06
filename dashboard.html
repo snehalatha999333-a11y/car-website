@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<script>
+// 🔐 PROTECT PAGE
+if (localStorage.getItem("admin") !== "true") {
+  window.location.href = "admin.html";
+}
+</script>
+
+<div class="navbar">
+  <h1>🔐 Admin Dashboard</h1>
+
+  <button onclick="logout()">Logout</button>
+</div>
+
+<h2 style="text-align:center;">Add New Car</h2>
+
+<div style="max-width:400px; margin:auto; padding:20px;">
+
+  <input id="name" placeholder="Car Name" style="width:100%; padding:10px;">
+  <input id="price" placeholder="Price" type="number" style="width:100%; padding:10px;">
+  <input id="image" placeholder="Image URL" style="width:100%; padding:10px;">
+
+  <button onclick="addCar()" style="width:100%; padding:10px;">
+    Add Car
+  </button>
+
+  <h3 id="msg"></h3>
+
+</div>
+
+<script>
+
+function logout() {
+  localStorage.removeItem("admin");
+  window.location.href = "admin.html";
+}
+
+function addCar() {
+
+  fetch("https://car-website-dhn5.onrender.com/cars", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: document.getElementById("name").value,
+      price: document.getElementById("price").value,
+      image: document.getElementById("image").value
+    })
+  })
+  .then(res => res.json())
+  .then(() => {
+    document.getElementById("msg").innerText = "Car Added 🚗";
+  })
+  .catch(() => {
+    document.getElementById("msg").innerText = "Error";
+  });
+
+}
+
+</script>
+
+</body>
+</html>
