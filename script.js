@@ -1,53 +1,74 @@
-fetch("https://car-website-dhn5.onrender.com/cars")
-  .then(res => res.json())
-  .then(cars => {
+document.addEventListener("DOMContentLoaded", () => {
 
-    let container = document.getElementById("carContainer");
+  // FETCH CARS FROM BACKEND
+  fetch("https://car-website-dhn5.onrender.com/cars")
+    .then(res => res.json())
+    .then(cars => {
 
-    if (!container) return;
+      let container = document.getElementById("carContainer");
 
-    container.innerHTML = "";
+      if (!container) return;
 
-    cars.forEach(car => {
+      container.innerHTML = "";
 
-      let div = document.createElement("div");
-      div.className = "car-card";
+      cars.forEach(car => {
 
-      div.innerHTML = `
-        <h3>${car.name}</h3>
-        <img src="${car.image}" alt="${car.name}">
-        <p>Price: £${car.price}</p>
+        let div = document.createElement("div");
+        div.className = "car-card";
 
-        <button onclick="buyCar('${car.name}', ${car.price})">
-          Buy Now
-        </button>
-      `;
+        div.innerHTML = `
+          <h3>${car.name}</h3>
+          <img src="${car.image}" alt="${car.name}">
+          <p>Price: £${car.price}</p>
 
-      container.appendChild(div);
+          <button onclick="buyCar('${car.name}', ${car.price})">
+            Buy Now
+          </button>
+        `;
+
+        container.appendChild(div);
+      });
+
+    })
+    .catch(err => console.log("Error loading cars:", err));
+
+
+  // CART COUNT
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let count = document.getElementById("cartCount");
+  if (count) {
+    count.innerText = cart.length;
+  }
+
+
+  // SEARCH FUNCTION
+  let search = document.getElementById("searchBox");
+
+  if (search) {
+
+    search.addEventListener("input", function () {
+
+      let value = this.value.toLowerCase();
+
+      let cards = document.querySelectorAll(".car-card");
+
+      cards.forEach(card => {
+
+        let name = card.querySelector("h3").innerText.toLowerCase();
+
+        card.style.display = name.includes(value) ? "block" : "none";
+
+      });
 
     });
 
-  })
-  .catch(err => console.log("Error loading cars:", err));
-
-
-// CART SYSTEM
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-
-// Update cart count on page load
-document.addEventListener("DOMContentLoaded", () => {
-
-  let count = document.getElementById("cartCount");
-
-  if (count) {
-    count.innerText = cart.length;
   }
 
 });
 
 
-// Add car to cart
+// ADD TO CART
 function buyCar(carName, price) {
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -66,34 +87,4 @@ function buyCar(carName, price) {
   }
 
   alert(carName + " added to cart!");
-
 }
-
-
-// SEARCH FUNCTION
-document.addEventListener("DOMContentLoaded", () => {
-
-  let search = document.getElementById("searchBox");
-
-  if (search) {
-
-    search.addEventListener("input", function () {
-
-      let value = this.value.toLowerCase();
-
-      let cards = document.querySelectorAll(".car-card");
-
-      cards.forEach(card => {
-
-        let name = card.querySelector("h3").innerText.toLowerCase();
-
-        card.style.display =
-          name.includes(value) ? "block" : "none";
-
-      });
-
-    });
-
-  }
-
-});
