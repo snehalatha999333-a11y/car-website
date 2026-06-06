@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Dealership</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+<div class="navbar">
+  <h1>🚗 Car Dealership</h1>
+
+  <div>
+    <a href="#">Home</a>
+    <a href="#">Cars</a>
+    <a href="#">Contact</a>
+    <a href="cart.html">🛒 Cart: <span id="cartCount">0</span></a>
+  </div>
+</div>
+
+  <!-- SEARCH BOX -->
+  <input type="text" placeholder="Search cars..." id="searchBox">
+
+  <h2 style="text-align:center;">Available Cars</h2>
+
+<!-- 👇 IMPORTANT: Backend will fill this -->
+  <div class="car-container" id="carContainer"></div>
+
+  <!-- JAVASCRIPT -->
+  <script src="script.js"></script>
+
+</body>
+</html>

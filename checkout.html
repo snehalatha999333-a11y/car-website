@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+  <h1>💳 Checkout</h1>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart</a>
+  </div>
+</div>
+
+<h2>Your Order</h2>
+
+<div id="orderBox" style="padding:20px;"></div>
+
+<h3 id="totalPrice" style="padding:20px;"></h3>
+
+<button onclick="payNow()" style="margin:20px; padding:10px;">
+  Pay Now
+</button>
+
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let prices = {
+    "BMW M4": 75000,
+    "Audi R8": 120000,
+    "Mercedes AMG GT": 95000
+  };
+
+  let total = 0;
+  let box = document.getElementById("orderBox");
+
+  if (cart.length === 0) {
+    box.innerHTML = "<p>No items in cart</p>";
+  } else {
+    cart.forEach(car => {
+      let price = prices[car] || 0;
+      total += price;
+
+      let div = document.createElement("div");
+      div.innerHTML = "🚗 " + car + " - £" + price;
+      div.style.padding = "10px";
+      div.style.background = "#222";
+      div.style.margin = "10px";
+      div.style.borderRadius = "8px";
+
+      box.appendChild(div);
+    });
+  }
+
+  document.getElementById("totalPrice").innerText =
+    "Total: £" + total;
+
+  function payNow() {
+    alert("Payment successful (demo) 🎉");
+    localStorage.removeItem("cart");
+    window.location.href = "index.html";
+  }
+</script>
+
+</body>
+</html>

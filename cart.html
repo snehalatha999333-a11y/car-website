@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+  <h1>🛒 Your Cart</h1>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart</a>
+  </div>
+</div>
+
+<h2>Your Selected Cars</h2>
+
+<div id="cartItems" style="padding: 20px;"></div>
+
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let container = document.getElementById("cartItems");
+
+  if (cart.length === 0) {
+    container.innerHTML = "<p>No cars in cart 🚗</p>";
+  } else {
+    cart.forEach(car => {
+      let div = document.createElement("div");
+      div.style.padding = "10px";
+      div.style.margin = "10px";
+      div.style.background = "#222";
+      div.style.borderRadius = "10px";
+      div.innerHTML = "🚗 " + car;
+      container.appendChild(div);
+    });
+  }
+</script>
+
+</body>
+</html>
+<br><br>
+<a href="checkout.html">
+  <button>Proceed to Checkout</button>
+</a>
