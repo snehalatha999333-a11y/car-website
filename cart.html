@@ -34,23 +34,26 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 let container = document.getElementById("cartItems");
 
-let total = 0;
+function renderCart() {
 
-if (cart.length === 0) {
+  container.innerHTML = "";
+  let total = 0;
 
-  container.innerHTML = "<p>No cars in cart 🚗</p>";
+  if (cart.length === 0) {
+    container.innerHTML = "<p>No cars in cart 🚗</p>";
+    document.getElementById("totalPrice").innerText = "";
+    return;
+  }
 
-} else {
-
-  cart.forEach(car => {
+  cart.forEach((car, index) => {
 
     let div = document.createElement("div");
-
     div.className = "car-card";
 
     div.innerHTML = `
       <h3>${car.name}</h3>
       <p>Price: £${car.price}</p>
+      <button onclick="removeItem(${index})">Remove</button>
     `;
 
     total += car.price;
@@ -59,10 +62,17 @@ if (cart.length === 0) {
 
   });
 
+  document.getElementById("totalPrice").innerText =
+    "Total: £" + total;
 }
 
-document.getElementById("totalPrice").innerText =
-  "Total: £" + total;
+function removeItem(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+renderCart();
 
 </script>
 
