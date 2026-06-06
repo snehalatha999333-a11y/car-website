@@ -1,4 +1,4 @@
-fetch("http://localhost:3000/cars")
+fetch("https://car-website-dhn5.onrender.com/cars")
   .then(res => res.json())
   .then(cars => {
 
