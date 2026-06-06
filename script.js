@@ -4,13 +4,15 @@ fetch("https://car-website-dhn5.onrender.com/cars")
 
     let container = document.getElementById("carContainer");
 
-    cars.forEach(car => {
+    container.innerHTML = ""; // important (prevents duplicates)
 
+    cars.forEach(car => {
       let div = document.createElement("div");
       div.className = "car-card";
 
       div.innerHTML = `
         <h3>${car.name}</h3>
+        <img src="${car.image}" />
         <p>Price: £${car.price}</p>
       `;
 
@@ -18,9 +20,8 @@ fetch("https://car-website-dhn5.onrender.com/cars")
     });
 
   })
-  .catch(err => {
-    console.log("Error loading cars:", err);
-  });
+  .catch(err => console.log("Error loading cars:", err));
+
 
 // CART SYSTEM
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
