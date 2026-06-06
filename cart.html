@@ -9,38 +9,62 @@
 
 <div class="navbar">
   <h1>🛒 Your Cart</h1>
+
   <div>
     <a href="index.html">Home</a>
     <a href="cart.html">Cart</a>
   </div>
 </div>
 
-<h2>Your Selected Cars</h2>
+<h2 style="text-align:center;">Your Selected Cars</h2>
 
-<div id="cartItems" style="padding: 20px;"></div>
+<div id="cartItems" style="padding:20px;"></div>
+
+<h2 id="totalPrice" style="text-align:center;"></h2>
+
+<div style="text-align:center; margin-top:20px;">
+  <a href="checkout.html">
+    <button>Proceed to Checkout</button>
+  </a>
+</div>
 
 <script>
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let container = document.getElementById("cartItems");
 
-  if (cart.length === 0) {
-    container.innerHTML = "<p>No cars in cart 🚗</p>";
-  } else {
-    cart.forEach(car => {
-      let div = document.createElement("div");
-      div.style.padding = "10px";
-      div.style.margin = "10px";
-      div.style.background = "#222";
-      div.style.borderRadius = "10px";
-      div.innerHTML = "🚗 " + car;
-      container.appendChild(div);
-    });
-  }
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let container = document.getElementById("cartItems");
+
+let total = 0;
+
+if (cart.length === 0) {
+
+  container.innerHTML = "<p>No cars in cart 🚗</p>";
+
+} else {
+
+  cart.forEach(car => {
+
+    let div = document.createElement("div");
+
+    div.className = "car-card";
+
+    div.innerHTML = `
+      <h3>${car.name}</h3>
+      <p>Price: £${car.price}</p>
+    `;
+
+    total += car.price;
+
+    container.appendChild(div);
+
+  });
+
+}
+
+document.getElementById("totalPrice").innerText =
+  "Total: £" + total;
+
 </script>
 
 </body>
 </html>
-<br><br>
-<a href="checkout.html">
-  <button>Proceed to Checkout</button>
-</a>
